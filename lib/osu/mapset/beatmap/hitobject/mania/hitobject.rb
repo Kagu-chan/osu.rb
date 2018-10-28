@@ -24,7 +24,7 @@ module Osu
             end
 
             def update_row(circleSize)
-              @row = @position[:x] / (512 / circleSize + 1)
+              @row = @position[:x] / (512 / circleSize) + 1
             end
           end
         end
