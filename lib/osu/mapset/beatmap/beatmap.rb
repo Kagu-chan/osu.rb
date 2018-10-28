@@ -48,7 +48,7 @@ module Osu
           set_section_as('Metadata', KeyValuePair)
           set_section_as('Difficulty', KeyValuePair)
           set_section_as('Events', Events)
-          set_section_as('TimingPoints', Section)
+          set_section_as('TimingPoints', TimingPoints)
           set_section_as('HitObjects', Section)
 
           @general      = @sections[:General]
