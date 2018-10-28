@@ -4,10 +4,21 @@ module Osu
       class BeatMap < LinesObject
 
         @@gametypeMap = {
-          :'0' => Osu::MapSet::BeatMap::HitObject::Standard::HitObject,
-          :'1' => Osu::MapSet::BeatMap::HitObject::Taiko::HitObject,
-          :'2' => Osu::MapSet::BeatMap::HitObject::CatchTheBeat::HitObject,
-          :'3' => Osu::MapSet::BeatMap::HitObject::Mania::HitObject
+          :'0' => {
+            :type => Osu::MapSet::BeatMap::HitObject::Standard::HitObject,
+            :decorator => Osu::MapSet::BeatMap::HitObject::Standard::Decorator
+          },
+          :'1' => {
+            :type => Osu::MapSet::BeatMap::HitObject::Taiko::HitObject
+          },
+          :'2' => {
+            :type => Osu::MapSet::BeatMap::HitObject::CatchTheBeat::HitObject,
+            :decorator => Osu::MapSet::BeatMap::HitObject::CatchTheBeat::Decorator
+          },
+          :'3' => {
+            :type => Osu::MapSet::BeatMap::HitObject::Mania::HitObject,
+            :decorator => Osu::MapSet::BeatMap::HitObject::Mania::Decorator
+          }
         }
 
         attr_reader :format,
@@ -16,6 +27,7 @@ module Osu
                     :metadata,
                     :difficulty,
                     :events,
+                    :colors,
                     :timingpoints,
                     :hitobjects,
                     :background,
@@ -32,6 +44,7 @@ module Osu
           @metadata = nil
           @difficulty = nil
           @events = nil
+          @colors = nil
           @timingpoints = nil
           @hitobjects = nil
           @background = nil
@@ -52,12 +65,13 @@ module Osu
           set_format()
           set_section_as('General', KeyValuePair)
           
-          HitObjects.type = @@gametypeMap[@sections[:General].mode.to_sym]
+          HitObjects.type = @@gametypeMap[@sections[:General].mode.to_sym][:type]
 
           set_section_as('Editor', KeyValuePair)
           set_section_as('Metadata', KeyValuePair)
           set_section_as('Difficulty', KeyValuePair)
           set_section_as('Events', Events)
+          set_section_as('Colors', Section)
           set_section_as('TimingPoints', TimingPoints)
           set_section_as('HitObjects', HitObjects)
 
@@ -74,9 +88,12 @@ module Osu
           @video      = @events.video
           @storyboard = @events.storyboard
 
-          @hitobjects.hitObjects.each { |hitObject|
-            hitObject.set_row_by_circlesize(@difficulty.circlesize.to_i)
-          }
+          decorator = @@gametypeMap[@sections[:General].mode.to_sym][:decorator]
+          if (decorator)
+            @hitobjects.hitObjects.each { |hitObject|
+              decorator.decorate(hitObject, self)
+            }
+          end
         end
 
 private

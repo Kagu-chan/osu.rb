@@ -21,7 +21,7 @@ module Osu
                             }
             @start        = data[2].to_i
             @end          = @start
-            @type         = { :'1' => :hs, :'5' => :hs, :'128' => :ln }[data[3].to_sym]
+            @type         = data[3].to_sym
             
             sampleType   = data[4].to_i
             sampleConfig = data[5].split(':')
