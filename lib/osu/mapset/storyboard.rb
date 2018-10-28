@@ -2,35 +2,35 @@ module Osu
   module MapSet
     class Storyboard < LinesObject
 
-      attr_reader :files, :bg, :video
+      attr_reader :files, :background, :video
 
       def initialize(lines)
         super
 
-        @bg = nil
+        @background = nil
         @video = nil
         @files = []
       end
 
       def find_files()
-        find_bg()
+        find_background()
         find_video()
         find_images()
         find_sounds()
 
-        @files << @bg if @bg
+        @files << @background if @background
         @files << @video if @video
 
         @files = @files.uniq
       end
 
     private
-      def find_bg()
+      def find_background()
         lines = read_from_to(:"//Background and Video events", :"//Break Periods")
         lines.each { |line|
           l = line.gsub(/0,0,"(.*)",0,0/, '\1')
           if l != line
-            @bg = l
+            @background = l
             break
           end
         }

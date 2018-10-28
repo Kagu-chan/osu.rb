@@ -3,7 +3,18 @@ module Osu
     module BeatMap
       class BeatMap < LinesObject
 
-        attr_reader :format, :general, :editor, :metadata, :difficulty, :events, :timingpoints, :hitobjects
+        attr_reader :format,
+                    :general,
+                    :editor,
+                    :metadata,
+                    :difficulty,
+                    :events,
+                    :timingpoints,
+                    :hitobjects,
+                    :background,
+                    :video,
+                    :storyboard,
+                    :mp3
 
         def initialize(file)
           @filename = file
@@ -16,6 +27,10 @@ module Osu
           @events = nil
           @timingpoints = nil
           @hitobjects = nil
+          @background = nil
+          @video = nil
+          @storyboard = nil
+          @mp3 = nil
 
           super []
         end
@@ -43,6 +58,11 @@ module Osu
           @events       = @sections[:Events]
           @timingpoints = @sections[:TimingPoints]
           @hitobjects   = @sections[:HitObjects]
+
+          @mp3        = @general.audiofilename
+          @background = @events.background
+          @video      = @events.video
+          @storyboard = @events.storyboard
         end
 
 private

@@ -3,14 +3,19 @@ module Osu
     module BeatMap
       class Events < Section
 
+        attr_reader :storyboard, :background, :video
+
         def initialize(lines)
           super
 
-          @storybaord = Osu::MapSet::Storyboard.new(@lines)
+          @storyboard = Osu::MapSet::Storyboard.new(@lines)
         end
 
         def parse()
-          @storybaord.find_files()
+          @storyboard.find_files()
+
+          @background = @storyboard.background
+          @video = @storyboard.video
         end
       end
     end
