@@ -3,6 +3,13 @@ module Osu
     module BeatMap
       class BeatMap < LinesObject
 
+        @@gametypeMap = {
+          :'0' => Osu::MapSet::BeatMap::HitObject::Standard::HitObject,
+          :'1' => Osu::MapSet::BeatMap::HitObject::Taiko::HitObject,
+          :'2' => Osu::MapSet::BeatMap::HitObject::CatchTheBeat::HitObject,
+          :'3' => Osu::MapSet::BeatMap::HitObject::Mania::HitObject
+        }
+
         attr_reader :format,
                     :general,
                     :editor,
@@ -44,12 +51,15 @@ module Osu
 
           set_format()
           set_section_as('General', KeyValuePair)
+          
+          HitObjects.type = @@gametypeMap[@sections[:General].mode.to_sym]
+
           set_section_as('Editor', KeyValuePair)
           set_section_as('Metadata', KeyValuePair)
           set_section_as('Difficulty', KeyValuePair)
           set_section_as('Events', Events)
           set_section_as('TimingPoints', TimingPoints)
-          set_section_as('HitObjects', Section)
+          set_section_as('HitObjects', HitObjects)
 
           @general      = @sections[:General]
           @editor       = @sections[:Editor]
@@ -63,6 +73,10 @@ module Osu
           @background = @events.background
           @video      = @events.video
           @storyboard = @events.storyboard
+
+          @hitobjects.hitObjects.each { |hitObject|
+            hitObject.set_row_by_circlesize(@difficulty.circlesize.to_i)
+          }
         end
 
 private
