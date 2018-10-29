@@ -30,7 +30,7 @@ module Osu
           end
 
           def update_samples()
-            warn('Method `update_sample` should be overwritten')
+            warn('Method `update_samples` should be overwritten')
           end
         end
       end

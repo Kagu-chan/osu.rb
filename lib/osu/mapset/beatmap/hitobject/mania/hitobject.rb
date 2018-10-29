@@ -35,11 +35,18 @@ module Osu
               @end = @data[5].split(':')[0]
             end
 
-            def update_sample()
+            def update_samples()
               sampleConfig = @data[5].split(':')
               sampleConfig.shift() if (@type == :ln)
   
-              @samples = [Sample.new(@sampleType, sampleConfig)]
+              @samples = [Sample.new({
+                :sampleType     => @sampleType,
+                :sampleSet      => sampleConfig[0],
+                :sampleAddition => sampleConfig[1],
+                :sampleSetID    => sampleConfig[2],
+                :volume         => sampleConfig[3],
+                :fileName       => sampleConfig[4]
+              })]
             end
           end
         end

@@ -6,31 +6,60 @@ module Osu
 
           attr_reader :sampleType, :sampleSet, :sampleAddition, :sampleSetID, :volume, :fileName
 
-          def initialize(sampleType, sampleConfig)
-            @sampleType = sampleType
-            # sampleType
-            # 0 = nichts
+          def initialize(sampleConfig)
+            ##
+            # Sample type number
+            #
+            # The sample applied to the hit object. bit operations used to combine multiple, e.g 6 respondes to 2 + 4
+            #
+            # 0 = nothing
             # 2 = whistle
             # 4 = finnish
             # 8 = clap
-            # bit operator => 2 | 4 = 6 => whistle finnish
+            @sampleType = sampleConfig[:sampleType]
 
-            # sampleSet
-            # 0 = from timing section
-            # 1 = normal
-            # 2 = soft
-            # 3 = drum
+            ##
+            # Overwrite the currently applied timing section sample set for the current tick
+            #
+            # 0 = use timing section
+            # 1 = normal sample set
+            # 2 = soft sample set
+            # 3 = drum sample set
+            @sampleSet = sampleConfig[:sampleSet]
 
-            # sampleAddition => seems to overwrite sampleSet
-            # 0 = nothing
-            # 1 = normal
-            # 2 = soft
-            # 3 = drum
+            ##
+            # Add a additional sample set to the current tick
+            #
+            # Works only in conjunction with @sampleType
+            #
+            # NOTE: Bug in osu!mania - In osu!mania this actually disables the @sampleSet completely
+            #       Unneccessary if it comes via per object configuration or timing section
+            #
+            # 0 = no additional sound
+            # 1 = normal sample set
+            # 2 = soft sample set
+            # 3 = drum sample set
+            @sampleAddition = sampleConfig[:sampleAddition]
 
-            # sampleSetID => overwrite the sample set from timing point
-            # 0 = from timing section
-            # >= 1 = use this one
-            @sampleSet, @sampleAddition, @sampleSetID, @volume, @fileName = sampleConfig
+            ##
+            # Play a different sample set id then normally
+            #
+            # 0 correspondes to the current sample set per configuration
+            # >= 1 overwrites it per object
+            @sampleSetID = sampleConfig[:sampleSetID]
+
+            ##
+            # Overwrite the volume of the current tick
+            #
+            # 0 correspondes to the current sample volume per configuration
+            @volume = sampleConfig[:volume]
+
+            ##
+            # Use a specific hitsound by file name
+            #
+            # If empty, the sample to play is determined by the configuration
+            # If not, @sampleType, @sampleSet, @sampleAddition and @sampleSetID is ignored
+            @fileName = sampleConfig[:fileName]
           end
         end
       end
