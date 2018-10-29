@@ -6,6 +6,7 @@ module Osu
 
           def self.decorate(hitobject, beatmap)
             hitobject.update_type()
+            hitobject.update_samples()
           end
         end
       end

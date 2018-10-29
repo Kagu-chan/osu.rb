@@ -12,29 +12,25 @@ module Osu
                       :sample
           
           def initialize(line)
-            data = line.split(',')
+            @data = line.split(',')
 
-            @row = 0
-            @position     = {
-                              :x => data[0].to_i,
-                              :y => data[1].to_i
-                            }
-            @start        = data[2].to_i
-            @end          = @start
-            @type         = data[3].to_sym
-            
-            sampleType   = data[4].to_i
-            sampleConfig = data[5].split(':')
-
-            if (@type == :ln)
-              @end = sampleConfig.shift().to_i
-            end
-
-            @sample = Sample.new(sampleType, sampleConfig)
+            @position   = {
+                          :x => @data[0].to_i,
+                          :y => @data[1].to_i
+                        }
+            @start      = @data[2].to_i
+            @end        = @start
+            @type       = @data[3].to_sym
+            @sampleType = @data[4].to_i
+            @samples    = []
           end
-          
-          def set_row_by_circlesize(cs)
-            @row = @position[:x] / (512 / cs) + 1
+
+          def update_type()
+            warn('Method `update_type` should be overwritten')
+          end
+
+          def update_samples()
+            warn('Method `update_sample` should be overwritten')
           end
         end
       end

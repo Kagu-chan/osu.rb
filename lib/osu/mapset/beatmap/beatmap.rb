@@ -63,6 +63,10 @@ module Osu
           convert_from_stream(content)
 
           set_format()
+          if (@format < 14)
+            raise "Beatmap format v#{@format} is not supported!"
+          end
+
           set_section_as('General', KeyValuePair)
           
           HitObjects.type = @@gametypeMap[@sections[:General].mode.to_sym][:type]
@@ -99,7 +103,7 @@ module Osu
 private
         def set_format()
           format_line = @lines[0]
-          @format = format_line.gsub(/[\w]*/, '').to_i
+          @format = format_line.gsub('osu file format v', '').to_i
         end
 
         def set_section_as(section, type)

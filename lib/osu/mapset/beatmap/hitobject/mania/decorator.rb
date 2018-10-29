@@ -9,6 +9,7 @@ module Osu
               super
 
               hitObject.update_row(beatMap.difficulty.circlesize.to_i)
+              hitObject.update_noteEnd()
             end
 
           end
