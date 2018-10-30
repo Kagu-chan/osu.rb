@@ -2,13 +2,15 @@ module Osu
   module MapSet
     class MapSet
 
-      attr_reader :beatmaps, :files
+      attr_reader :beatmaps, :files, :storyboard
 
       def initialize(directory)
         @directory = directory
         @files = []
         @mapset_size = 0
         @beatmaps = []
+        @storyboard = nil
+        @storyboardFile = nil
       end
 
       def load()
@@ -41,6 +43,15 @@ module Osu
         }
       end
 
+      def open_storyboard()
+        @storyboardFile = @files.find { |file|
+          file.match(/\.osb$/)
+        }
+        if @storyboardFile then
+          @storyboard = Storyboard.factory(@storyboardFile)
+        end
+      end
+
       def used_files()
         return accumulate_used_files()
       end
@@ -60,7 +71,15 @@ private
       end
 
       def accumulate_used_files()
-        files = (@beatmaps.map { |map| map.get_used_files() }).flatten - [nil]
+        files = [
+          @storyboard.files,
+          @storyboardFile.sub(@directory + '/', '')
+        ]
+
+        files << @beatmaps.map { |map| map.get_used_files() }
+        files.flatten!
+
+        files = files - [nil]
         files.sort_by! { |e| e.downcase }
 
         return files.uniq
