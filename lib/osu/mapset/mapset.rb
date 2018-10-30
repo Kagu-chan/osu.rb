@@ -60,6 +60,15 @@ module Osu
         return map_given_files() - used_files()
       end
 
+      def missing_files()
+        given_files = @files.map() { |file|
+          file.sub(@directory + '/', '')
+        }
+        used_files().select() { |file|
+          !given_files.include?(file)
+        }
+      end
+
 private
       def map_given_files()
         files = @files.map() { |file|
@@ -79,7 +88,7 @@ private
         files << @beatmaps.map { |map| map.get_used_files() }
         files.flatten!
 
-        files = files - [nil]
+        files = files - [nil, '']
         files.sort_by! { |e| e.downcase }
 
         return files.uniq
