@@ -1,6 +1,7 @@
 require 'find'
 
 require_relative 'numeric'
+require_relative 'array'
 require_relative 'linesobject'
 
 require_relative 'osu/mapset/beatmap/hitobject/hitobject'
