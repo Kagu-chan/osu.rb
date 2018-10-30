@@ -19,13 +19,13 @@ module Osu
           data_a = line_a.split(',')
           data_b = line_b ? line_b.split(',') : ['0']
 
-          @start      = data_a[0]
-          @end        = data_b[0]
+          @start      = data_a[0].to_i
+          @end        = data_b[0].to_i
           @value      = data_a[1]
-          @signature  = data_a[2]
-          @sampletype = %(normal soft drum)[data_a[3].to_i - 1].to_sym
-          @sampleset  = data_a[4]
-          @volume = data_a[5]
+          @signature  = data_a[2].to_i
+          @sampletype = %w(Normal Soft Drum)[data_a[3].to_i - 1].to_sym
+          @sampleset  = data_a[4].to_i
+          @volume = data_a[5].to_i
           @type = data_a[6] == '1' ? :timing : :inherit
           @kiai = data_a[7] == '1'
           @bpm = 0

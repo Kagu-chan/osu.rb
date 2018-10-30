@@ -73,10 +73,16 @@ module Osu
             @timingSection = sampleConfig[:timingSection]
           end
 
-          def get_sample_file_name()
+          def get_sample_file_names()
             raise 'timing section needs to be set' if !@timingSection
 
-            return ''
+            return [@fileName] if @fileName.size > 0
+            return false
+          end
+
+protected
+          def get_file_names_by_config()
+            raise NotImplementedError
           end
         end
       end

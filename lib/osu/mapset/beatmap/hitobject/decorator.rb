@@ -4,9 +4,12 @@ module Osu
       module HitObject
         class Decorator
 
-          def self.decorate(hitobject, beatmap)
-            hitobject.update_type()
-            hitobject.update_samples()
+          def self.decorate(hitObject, beatmap)
+            hitObject.update_type()
+            hitObject.update_samples()
+            hitObject.update_noteEnd()
+            hitObject.apply_timing_sections(beatmap.timingpoints)
+
           end
         end
       end

@@ -36,17 +36,27 @@ module Osu
             end
 
             def update_samples()
+              sampleMapping = {
+                :'0' => nil,
+                :'1' => :Normal,
+                :'2' => :Soft,
+                :'3' => :Drum
+              }
               sampleConfig = @data[5].split(':')
               sampleConfig.shift() if (@type == :LN)
   
               @samples = [Sample.new({
-                :sampleType     => @sampleType,
-                :sampleSet      => sampleConfig[0],
-                :sampleAddition => sampleConfig[1],
-                :sampleSetID    => sampleConfig[2],
-                :volume         => sampleConfig[3],
-                :fileName       => sampleConfig[4]
+                :sampleType     => @sampleType.to_i,
+                :sampleSet      => sampleMapping[sampleConfig[0].to_sym],
+                :sampleAddition => sampleMapping[sampleConfig[1].to_sym],
+                :sampleSetID    => sampleConfig[2].to_i,
+                :volume         => sampleConfig[3].to_i,
+                :fileName       => sampleConfig[4].sub(/\n/, '')
               })]
+            end
+
+            def apply_timing_sections(timingPoints)
+              @samples[0].timingSection = timingPoints.get_timing_section_for(@start)
             end
           end
         end

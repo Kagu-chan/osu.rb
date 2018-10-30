@@ -9,7 +9,7 @@ module Osu
                       :start,
                       :end,
                       :type,
-                      :sample
+                      :samples
           
           def initialize(line)
             @data = line.split(',')
@@ -29,8 +29,16 @@ module Osu
             warn('Method `update_type` should be overwritten')
           end
 
+          def update_noteEnd()
+            warn('Method `update_noteEnd` should be overwritten')
+          end
+
           def update_samples()
             warn('Method `update_samples` should be overwritten')
+          end
+
+          def apply_timing_sections(timingPoints)
+            warn('Method `apply_timing_sections` should be overwritten')
           end
         end
       end
