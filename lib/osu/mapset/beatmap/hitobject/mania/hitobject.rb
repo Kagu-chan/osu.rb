@@ -10,9 +10,9 @@ module Osu
             #               LN: 64,192,34977,128,0,35636:0:0:0:0:
 
             @@typeMapping = {
-              :'1'   => :hs,
-              :'5'   => :hs,
-              :'128' => :ln
+              :'1'   => :SN,
+              :'5'   => :SN,
+              :'128' => :LN
             }
 
             attr_reader :row
@@ -37,7 +37,7 @@ module Osu
 
             def update_samples()
               sampleConfig = @data[5].split(':')
-              sampleConfig.shift() if (@type == :ln)
+              sampleConfig.shift() if (@type == :LN)
   
               @samples = [Sample.new({
                 :sampleType     => @sampleType,
