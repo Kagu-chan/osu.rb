@@ -4,9 +4,20 @@ module Osu
 
       attr_reader :files, :background, :video
 
+      attr_accessor :file
+
+      def self.factory(file)
+        file = File.open(file, 'rb')
+        content = file.read().gsub(/\r\n?/, "\n")
+        file.close()
+
+        instance = self.new(content)
+      end
+
       def initialize(lines)
         super
 
+        @file = nil
         @background = nil
         @video = nil
         @files = []
@@ -30,7 +41,7 @@ module Osu
         lines.each { |line|
           l = line.gsub(/0,0,"(.*)",0,0\n/, '\1')
           if l != line
-            @background = l
+            @background = l.gsub(/\\/, '/')
             break
           end
         }
@@ -39,9 +50,9 @@ module Osu
       def find_video()
         lines = read_from_to(:"//Background and Video events", :"//Break Periods")
         lines.each { |line|
-          l = line.gsub(/Video,\d+,"(.*)"/, '\1')
+          l = line.gsub(/Video,\d+,"(.*)"\n/, '\1')
           if l != line
-            @video = l
+            @video = l.gsub(/\\/, '/')
             break
           end
         }
@@ -52,7 +63,9 @@ module Osu
 
         lines.each { |line|
           if (line.start_with? 'Sprite')
-            @files << line.gsub(/Sprite,\w+,\w+,"(.*)",-?\d+,-?\d+/, '\1')
+            @files << line
+              .gsub(/Sprite,\w+,\w+,"(.*)",-?\d+,-?\d+\n/, '\1')
+              .gsub(/\\/, '/')
           end
         }
       end
@@ -62,7 +75,9 @@ module Osu
 
         lines.each { |line|
           if (line.start_with? 'Sample')
-            @files << line.gsub(/Sample,\d+,\d,"(.*)",\d+/, '\1')
+            @files << line
+              .gsub(/Sample,\d+,\d,"(.*)",\d+\n/, '\1')
+              .gsub(/\\/, '/')
           end
         }
       end
