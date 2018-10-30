@@ -24,6 +24,7 @@ module Osu
         end
         
         def get_used_files()
+          # TODO: Does not return all files as it seems
           files = @hitObjects.map { |hit| hit.get_used_files() }
           files
         end
