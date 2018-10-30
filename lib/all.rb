@@ -24,3 +24,5 @@ require_relative 'osu/mapset/beatmap/timingsection'
 require_relative 'osu/mapset/beatmap/beatmap'
 require_relative 'osu/mapset/mapset'
 require_relative 'osu/mapset/storyboard'
+
+require_relative 'osu/tools'
