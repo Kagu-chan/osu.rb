@@ -10,7 +10,6 @@ module Osu
 
               hitObject.update_row(beatMap.difficulty.circlesize.to_i)
             end
-
           end
         end
       end

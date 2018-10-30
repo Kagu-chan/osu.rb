@@ -5,10 +5,6 @@ module Osu
         module Taiko
           class HitObject < Osu::MapSet::BeatMap::HitObject::HitObject
 
-            def initialize(line)
-              super
-            end
-
           end
         end
       end

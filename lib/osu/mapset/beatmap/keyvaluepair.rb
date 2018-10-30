@@ -3,10 +3,6 @@ module Osu
     module BeatMap
       class KeyValuePair < Section
 
-        def initialize(lines)
-          super
-        end
-
         def parse()
           @lines.each { |line|
             data = line.split(':')
@@ -24,7 +20,6 @@ module Osu
             }
           }
         end
-
       end
     end
   end

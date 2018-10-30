@@ -4,8 +4,6 @@ module Osu
 
       attr_reader :files, :background, :video
 
-      attr_accessor :file
-
       def self.factory(file)
         file = File.open(file, 'rb')
         content = file.read().gsub(/\r\n?/, "\n")
@@ -17,7 +15,6 @@ module Osu
       def initialize(lines)
         super
 
-        @file = nil
         @background = nil
         @video = nil
         @files = []
@@ -35,7 +32,7 @@ module Osu
         @files = @files.uniq
       end
 
-    private
+private
       def find_background()
         lines = read_from_to(:"//Background and Video events", :"//Break Periods")
         lines.each { |line|
@@ -81,7 +78,6 @@ module Osu
           end
         }
       end
-
     end
   end
 end

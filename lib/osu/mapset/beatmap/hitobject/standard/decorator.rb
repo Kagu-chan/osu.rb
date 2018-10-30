@@ -5,10 +5,6 @@ module Osu
         module Standard
           class Decorator < Osu::MapSet::BeatMap::HitObject::Decorator
 
-            def self.decorate(hitobject, beatmap)
-              super
-            end
-
           end
         end
       end

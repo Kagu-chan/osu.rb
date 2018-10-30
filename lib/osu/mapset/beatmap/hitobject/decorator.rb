@@ -9,7 +9,6 @@ module Osu
             hitObject.update_samples()
             hitObject.update_noteEnd()
             hitObject.apply_timing_sections(beatmap.timingpoints)
-
           end
         end
       end

@@ -13,10 +13,6 @@ module Osu
 
             attr_reader :newCombo
 
-            def initialize(line)
-              super
-            end
-
             def update_type()
               type = @type.to_s.to_i
 

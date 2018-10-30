@@ -11,7 +11,6 @@ class LinesObject
   end
 
 protected
-
   def convert_from_stream(stream)
     @lines = []
     stream.each_line { |line| @lines << line }
