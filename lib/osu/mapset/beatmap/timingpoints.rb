@@ -23,19 +23,18 @@ module Osu
         ##
         # Get the timing section for a specific object
         #
-        # Due to rounding issues it may be shiftet by a millisecond
+        # Due to rounding issues the first hit objects may be shiftet by a millisecond
         def get_timing_section_for(offset)
-          offset_l = offset - 1
-          offset_r = offset + 1
+          @timingSections.find { |section, index|
+            start = section.start
 
-          index = @timingSections.find_index() { |section|
-            start_before = section.start <= offset_r
-            end_after    = section.end > offset_l
+            # Handle the shiftet offsets
+            if index == 0
+              start -= 1
+            end
 
-            start_before && end_after
+            start <= offset && (section.end == 0 || section.end > offset)
           }
-
-          return index ? @timingSections[index] : false
         end
       end
     end
