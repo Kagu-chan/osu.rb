@@ -44,7 +44,7 @@ protected
               end
 
               sounds.map! { |s|
-                "#{set}-hit#{soundMapping[s]}#{sampleSetID > 0 ? sampleSetID : ''}.wav"
+                sampleSetID > 0 ? "#{set}-hit#{soundMapping[s]}#{sampleSetID != 1 ? sampleSetID : ''}.wav" : ''
               }
 
               return sounds
