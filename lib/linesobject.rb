@@ -5,6 +5,8 @@ class LinesObject
   def initialize(lines)
     if lines.is_a? Array
       @lines = lines
+    elsif lines.is_a? String
+      convert_from_stream(lines)
     end
   end
 
