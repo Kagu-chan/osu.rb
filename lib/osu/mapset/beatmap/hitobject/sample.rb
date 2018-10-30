@@ -4,7 +4,14 @@ module Osu
       module HitObject
         class Sample
 
-          attr_reader :sampleType, :sampleSet, :sampleAddition, :sampleSetID, :volume, :fileName
+          attr_reader :sampleType,
+                      :sampleSet,
+                      :sampleAddition,
+                      :sampleSetID,
+                      :volume,
+                      :fileName
+
+          attr_accessor :timingSection
 
           def initialize(sampleConfig)
             ##
@@ -60,6 +67,16 @@ module Osu
             # If empty, the sample to play is determined by the configuration
             # If not, @sampleType, @sampleSet, @sampleAddition and @sampleSetID is ignored
             @fileName = sampleConfig[:fileName]
+
+            ##
+            # The timing section responsible for this object
+            @timingSection = sampleConfig[:timingSection]
+          end
+
+          def get_sample_file_name()
+            raise 'timing section needs to be set' if !@timingSection
+
+            return ''
           end
         end
       end
