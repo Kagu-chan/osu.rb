@@ -28,7 +28,7 @@ module Osu
       def find_background()
         lines = read_from_to(:"//Background and Video events", :"//Break Periods")
         lines.each { |line|
-          l = line.gsub(/0,0,"(.*)",0,0/, '\1')
+          l = line.gsub(/0,0,"(.*)",0,0\n/, '\1')
           if l != line
             @background = l
             break

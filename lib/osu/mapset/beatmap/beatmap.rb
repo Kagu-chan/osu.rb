@@ -100,6 +100,17 @@ module Osu
           end
         end
 
+        def get_used_files()
+          files = [
+            File.basename(@filename),
+            @storyboard.files,
+            @mp3,
+            @hitobjects.get_used_files()
+          ]
+
+          files
+        end
+
 private
         def set_format()
           format_line = @lines[0]

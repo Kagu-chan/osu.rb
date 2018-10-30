@@ -22,6 +22,11 @@ module Osu
         def self.type=(type)
           @@type = type
         end
+        
+        def get_used_files()
+          files = @hitObjects.map { |hit| hit.get_used_files() }
+          files
+        end
       end
     end
   end

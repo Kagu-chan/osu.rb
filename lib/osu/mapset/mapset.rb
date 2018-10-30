@@ -13,8 +13,10 @@ module Osu
 
       def load()
         Find.find(@directory) { |path|
-          @files << path
-          @mapset_size += FileTest.size(path)
+          if (!File.directory? path) then
+            @files << path
+            @mapset_size += FileTest.size(path)
+          end
         }
       end
 
@@ -37,6 +39,31 @@ module Osu
             @beatmaps << BeatMap::BeatMap.new(path)
           end
         }
+      end
+
+      def used_files()
+        return accumulate_used_files()
+      end
+
+      def unused_files()
+        return map_given_files() - used_files()
+      end
+
+private
+      def map_given_files()
+        files = @files.map() { |file|
+          file.sub(@directory + '/', '')
+        }
+        files.sort_by! { |e| e.downcase }
+
+        files
+      end
+
+      def accumulate_used_files()
+        files = (@beatmaps.map { |map| map.get_used_files() }).flatten - [nil]
+        files.sort_by! { |e| e.downcase }
+
+        return files.uniq
       end
     end
   end

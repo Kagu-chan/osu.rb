@@ -25,6 +25,11 @@ module Osu
             @samples    = []
           end
 
+          def get_used_files()
+            files = @samples.map() { |sample| sample.get_sample_file_names() }
+            files
+          end
+
           def update_type()
             warn('Method `update_type` should be overwritten')
           end
