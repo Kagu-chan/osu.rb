@@ -1,7 +1,7 @@
 module Osu
   module MapSet
     module BeatMap
-      class Section < LinesObject
+      class Section < Helper::LinesObject
 
         def parse()
           # NOP

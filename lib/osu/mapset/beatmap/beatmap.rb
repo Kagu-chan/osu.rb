@@ -1,7 +1,7 @@
 module Osu
   module MapSet
     module BeatMap
-      class BeatMap < LinesObject
+      class BeatMap < Helper::LinesObject
 
         @@gametypeMap = {
           :'0' => {

@@ -1,6 +1,6 @@
 module Osu
   module MapSet
-    class Storyboard < LinesObject
+    class Storyboard < Helper::LinesObject
 
       attr_reader :files, :background, :video
 
