@@ -1,14 +1,6 @@
 module Osu
   module Tool
-    class Analyzer
-
-      def self.run(args)
-        if (args == ['-help']) then
-          self.help()
-        else
-          self.new(*args).run()
-        end
-      end
+    class Analyzer < Tool
 
       def initialize(mapset, *args)
         ##
@@ -26,16 +18,10 @@ module Osu
         @mapset_location = mapset
         @maps = []
 
-        loop {
-          arg = args[0]
-          if arg && arg.start_with?('-') then
-            option, value = args.shift().sub(/^-/, '').split('=')
-
-            instance_variable_set("@#{option}", value || true)
-          else
-            break
-          end
-        }
+        Helper::Console.parse_arguments(self, {
+          :skipstoryboard => [:boolean, true],
+          :all            => [:boolean, true]
+        }, args)
 
         @maps = @all ? [] : args
       end
@@ -53,7 +39,7 @@ module Osu
         end
       end
 
-private
+protected
       def self.help()
         puts <<TXT
 Usage: ruby osr.rb analyzer MAP [OPTIONS] [DIFFS[]]

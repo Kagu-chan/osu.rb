@@ -48,7 +48,7 @@ TXT
 
     def self.list_tools(args)
       dir = File.expand_path('tool', File.dirname(__FILE__))
-      tools = Dir.entries(dir) - ['.', '..']
+      tools = (Dir.entries(dir) - ['.', '..']).select() { |file| !file.end_with?('.rb') }
       tools_formatted = tools.join("\n  - ")
       puts <<TXT
 Available system tools

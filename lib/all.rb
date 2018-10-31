@@ -3,6 +3,7 @@ require 'find'
 require_relative 'numeric'
 require_relative 'array'
 
+require_relative 'helper/console'
 require_relative 'helper/linesobject'
 
 require_relative 'osu/mapset/beatmap/hitobject/hitobject'
@@ -27,3 +28,4 @@ require_relative 'osu/mapset/mapset'
 require_relative 'osu/mapset/storyboard'
 
 require_relative 'osu/tools'
+require_relative 'osu/tool/tool'
