@@ -16,7 +16,10 @@ module Osu
             next_index = index + 1
             next_line = @lines.size >= next_index ? @lines[next_index] : '0'
 
-            @timingSections << TimingSection.new(line, next_line)
+            newSection = TimingSection.new(line, next_line)
+
+            newSection.bpm = @timingSections.last().bpm if newSection.inherited?
+            @timingSections << newSection
           }
         end
 
