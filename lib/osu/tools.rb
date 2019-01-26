@@ -10,7 +10,13 @@ module Osu
 
     def self.run()
       args = ARGV
-      tool_name = args.shift().to_sym
+      tool = args.shift()
+
+      unless tool
+        self.help(nil)
+        Kernel.exit
+      end
+      tool_name = tool.to_sym
 
       begin
         self.run_tool(tool_name, args)
