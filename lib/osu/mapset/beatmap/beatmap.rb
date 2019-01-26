@@ -64,17 +64,17 @@ module Osu
             raise "Beatmap format v#{@format} is not supported!"
           end
 
-          set_section_as('General', KeyValuePair)
+          set_section_as('General', Section::KeyValuePair)
           
-          HitObjects.type = @@gametypeMap[@sections[:General].mode.to_sym][:type]
+          Section::HitObjects.type = @@gametypeMap[@sections[:General].mode.to_sym][:type]
 
-          set_section_as('Editor', KeyValuePair)
-          set_section_as('Metadata', KeyValuePair)
-          set_section_as('Difficulty', KeyValuePair)
-          set_section_as('Events', Events)
-          set_section_as('Colors', Section)
-          set_section_as('TimingPoints', TimingPoints)
-          set_section_as('HitObjects', HitObjects)
+          set_section_as('Editor', Section::KeyValuePair)
+          set_section_as('Metadata', Section::KeyValuePair)
+          set_section_as('Difficulty', Section::KeyValuePair)
+          set_section_as('Events', Section::Events)
+          set_section_as('Colors', Section::Section)
+          set_section_as('TimingPoints', Section::TimingPoints)
+          set_section_as('HitObjects', Section::HitObjects)
 
           @general      = @sections[:General]
           @editor       = @sections[:Editor]
