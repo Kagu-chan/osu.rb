@@ -11,6 +11,14 @@ module Helper
       end
     end
 
+    def self.read_from_file(file_name)
+      file = File.open(file_name, 'rb')
+      content = file.read().gsub(/\r\n?/, "\n")
+      file.close()
+
+      content
+    end
+
 protected
     def convert_from_stream(stream)
       @lines = []

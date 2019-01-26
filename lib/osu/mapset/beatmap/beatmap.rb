@@ -56,10 +56,7 @@ module Osu
         end
 
         def load()
-          file = File.open(@filename, 'rb')
-          content = file.read().gsub(/\r\n?/, "\n")
-          file.close()
-
+          content = Helper::LinesObject.read_from_file(@filename)
           convert_from_stream(content)
 
           set_format()
